@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body>
+    <div class="container">
+      <h1 class="display-4">Picks</h1> 
+      <h4 class="display-6">{{user_name}} {{user.coin_balance}}</h4> 
+       
+      <table class="table table-striped  table table-sm">
+        <thead class="thead-primary bg-dark text-light">
+          <th>Date</th>
+          <th>Pick</th>
+          <th>Venue</th>
+          <th>Opponent</th>
+          <th class="text-right">Odds</th>
+          <th class="text-center">Risk</th>
+          <th class="text-center">To Win</th>
+          <th>Status</th>
+          <th>Result</th>
+          <th>Return</th>
+        </thead>
+        <tbody>
+          {% for picks in user_picks %}
+          <tr>
+            <td>{{picks.game_pick.game_date}}</td>
+            <td>{{picks.pick}}</td>
+            <td>{{picks.side}}</td>
+            {% if picks.side == 'away' %}
+            <td>{{picks.game_pick.team_home_name}}</td>
+            {% else %}
+            <td>{{picks.game_pick.team_away_name}}</td>
+            {% endif %}
+            
+            <td class="text-right">{{ picks.pick_odds_amer|round|int}}</td>
+            <td class="text-center">{{picks.risk_amount}}</td>
+            <td class="text-center">{{picks.to_win_amount}}</td>
+            <td>{{picks.pick_status|replace('STATUS_','')}}</td>
+            {% if picks.pick_status == 'Scored' %}
+            <td>{% if picks.pick_win == 1 %}Win{% else %}Loss{% endif %}</td>
+            <td>{{ picks.coin_return }}</td>
+            {% else %}
+            <td>---</td>
+            <td>---</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="/mlb" class="btn btn-primary">Show MLB Card</a>
+    </div>
+  </body>
+
+{% endblock %}

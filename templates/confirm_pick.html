@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<form method="POST">
+  <div class="card border-secondary mb-3" style="max-width: 35rem;">
+    <div class="card-header"><b>Pick</b></div>
+    <div class="card-body">
+    
+        <p class="card-text">{{game_date}} MLB Baseball 
+        <b>{{rotation_number}} {{team}} {{moneyline}}</b>
+        vs {{opponent}}
+        <br>
+
+        <h4><small>Risking <b>{{risk_amount}} </b> coins To Win <b>{{win_amount}}</b> coins </small></h4>
+        </p>
+         
+
+{{ form.hidden_tag() }}
+
+{% for field in form
+    if field.widget.input_type != 'hidden' %}
+  <p>
+  <button class="btn btn-success mr-3" type="submit">Confirm Pick</button>
+
+   <a href="{{ url_for('homepage') }}" class="btn btn-danger">Cancel</a>  
+  </p>
+  {% endfor %}
+
+</div>
+</div>
+
+</form>
+
+{% endblock %}
+ 
